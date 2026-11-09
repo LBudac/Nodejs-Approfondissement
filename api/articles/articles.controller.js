@@ -18,6 +18,10 @@ class ArticlesController {
             const data = req.body;
             const articleModified = await articleService.update(id, data);
             res.json(articleModified);
+            res.status(200).json(articleModified);
+            if (req.user.role !== "admin") {
+                throw new ForbidenError("Vous n'avez pas le droit de modifier un article");
+            }
         } catch (err) {
             next(err);
         }
@@ -29,6 +33,9 @@ class ArticlesController {
             await articleService.delete(id);
             req.io.emit("article:delete", { id });
             res.status(204).send();
+            if (req.user.role !== "admin") {
+                throw new ForbidenError("Vous n'avez pas le droit de supprimer un article");
+            }
         } catch (err) {
             next(err);
         }
