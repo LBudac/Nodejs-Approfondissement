@@ -3,6 +3,7 @@ const UnauthorizedError = require("../../errors/unauthorized");
 const jwt = require("jsonwebtoken");
 const config = require("../../config");
 const usersService = require("./users.service");
+const articlesService = require("../articles/articles.service");
 
 class UsersController {
   async getAll(req, res, next) {
@@ -21,6 +22,21 @@ class UsersController {
         throw new NotFoundError();
       }
       res.json(user);
+    } catch (err) {
+      next(err);
+    }
+  }
+  // GET /api/users/:userId/articles
+  async getArticlesByUser(req, res, next) {
+    try {
+      const userId = req.params.userId;
+      // Vérifie que l'utilisateur existe pour renvoyer une réponse 404 plutôt qu'une liste vide
+      const user = await usersService.get(userId);
+      if (!user) {
+        throw new NotFoundError();
+      }
+      const articles = await articlesService.getByUser(userId);
+      res.json(articles);
     } catch (err) {
       next(err);
     }

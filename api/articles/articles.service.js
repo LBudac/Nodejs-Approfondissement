@@ -1,6 +1,14 @@
 const Article = require("./articles.schema");
 
  class ArticleService {
+    // GET /api/users/:userId/articles
+    // Renvoie les articles d'un utilisateur, avec leur auteur sans son mot de passe
+    getByUser(userId) {
+        return Article.find({ user: userId}).populate({
+          path: "user",
+          select: "-password"
+        })
+    }
     // POST /api/articles
     create(data) {
         const article = new Article(data);

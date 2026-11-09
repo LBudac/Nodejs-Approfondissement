@@ -7,7 +7,6 @@ const userRouter = require("./api/users/users.router");
 const usersController = require("./api/users/users.controller");
 const articleRouter = require("./api/articles/articles.router");
 const authMiddleware = require("./middlewares/auth");
-require("./api/articles/articles.schema"); // temporaire
 const app = express();
 
 const server = http.createServer(app);
@@ -29,6 +28,8 @@ app.use((req, res, next) => {
 app.use(cors());
 app.use(express.json());
 
+// Déclarée avant authMiddleware : cette route est accessible sans token
+app.get("/api/users/:userId/articles", usersController.getArticlesByUser);
 app.use("/api/users", authMiddleware, userRouter);
 app.use("/api/articles", authMiddleware, articleRouter);
 app.post("/login", usersController.login);
