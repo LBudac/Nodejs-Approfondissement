@@ -29,6 +29,7 @@ describe("tester API users", () => {
     // mongoose.Query.prototype.find = jest.fn().mockResolvedValue(MOCK_DATA);
     mockingoose(User).toReturn(MOCK_DATA, "find");
     mockingoose(User).toReturn(MOCK_DATA_CREATED, "save");
+    mockingoose(User).toReturn(MOCK_DATA[0], "findOne");
   });
 
   test("[Users] Get All", async () => {
