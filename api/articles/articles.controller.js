@@ -14,14 +14,14 @@ class ArticlesController {
     // PUT /api/articles/:id
     async update(req, res, next) {
         try {
+            if (req.user.role !== "admin") {
+                throw new ForbidenError("Vous n'avez pas le droit de modifier un article");
+            }
             const id = req.params.id;
             const data = req.body;
             const articleModified = await articleService.update(id, data);
             res.json(articleModified);
             res.status(200).json(articleModified);
-            if (req.user.role !== "admin") {
-                throw new ForbidenError("Vous n'avez pas le droit de modifier un article");
-            }
         } catch (err) {
             next(err);
         }
@@ -29,13 +29,13 @@ class ArticlesController {
     // DELETE /api/articles/:id
     async delete(req, res, next) {
         try {
+            if (req.user.role !== "admin") {
+                throw new ForbidenError("Vous n'avez pas le droit de supprimer un article");
+            }
             const id = req.params.id;
             await articleService.delete(id);
             req.io.emit("article:delete", { id });
             res.status(204).send();
-            if (req.user.role !== "admin") {
-                throw new ForbidenError("Vous n'avez pas le droit de supprimer un article");
-            }
         } catch (err) {
             next(err);
         }
