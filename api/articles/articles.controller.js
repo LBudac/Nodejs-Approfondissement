@@ -5,7 +5,10 @@ class ArticlesController {
     // POST /api/articles
     async create(req, res, next) {
         try {
-            const article = await articleService.create(req.body);
+            const article = await articleService.create({
+                ...req.body,
+                user: req.user._id
+            });
             req.io.emit("article:create", article);
             res.status(201).json(article);
         } catch (err) {
