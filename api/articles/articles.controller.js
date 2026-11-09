@@ -21,7 +21,6 @@ class ArticlesController {
             const data = req.body;
             const articleModified = await articleService.update(id, data);
             res.json(articleModified);
-            res.status(200).json(articleModified);
         } catch (err) {
             next(err);
         }
@@ -35,7 +34,6 @@ class ArticlesController {
             const id = req.params.id;
             await articleService.delete(id);
             req.io.emit("article:delete", { id });
-            res.status(204).send();
         } catch (err) {
             next(err);
         }
