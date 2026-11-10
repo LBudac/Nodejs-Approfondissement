@@ -19,16 +19,26 @@ npm run seed    # crée les comptes de test
 npm run serve   # lance l'API sur http://localhost:3000
 ```
 
+## Comptes de test
+
+Créés par npm run seed (script seed-admin.js), pour le développement uniquement. Le script peut être relancé sans erreur.
+
+| Rôle   | E-mail         | Mot de passe |
+|--------|----------------|--------------|
+| admin  | admin@test.fr  | password     |
+| member | membre@test.fr | password     |
+
 ## 1. Rédigez un diagramme UML de la base de données
-J'ai fais 2 diagramme UML dans /livrables , Diagramme UML.png
+
 ![Diagramme UML](Diagramme%20UML.png)
 
-Le deuxieme PNG correspond au même mais avec l'énumération de status demander dans l'exercice 2
+Le deuxième PNG ajoute l'énumération de status demandé dans l'exercice 2
 ![Diagramme UML](Diagramme%20UML%20avec%20énumeration%20de%20article.png)
 
 
 ## 6. Déploiement avec PM2
-La configurationPM2 est dans ecosystem.config.js
+
+La configuration PM2 est dans ecosystem.config.js
 
 ```bash
 npm install -g pm2
