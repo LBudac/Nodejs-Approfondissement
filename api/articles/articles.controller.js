@@ -1,5 +1,6 @@
 const articleService = require("./articles.service");
 const ForbiddenError = require("../../errors/forbidden");
+const NotFoundError = require("../../errors/not-found");
 
 class ArticlesController {
     // POST /api/articles
@@ -24,6 +25,9 @@ class ArticlesController {
             const id = req.params.id;
             const data = req.body;
             const articleModified = await articleService.update(id, data);
+            if (!articleModified) {
+                throw new NotFoundError();
+            }
             req.io.emit("article:update", articleModified);
             res.status(200).json(articleModified);
         } catch (err) {
