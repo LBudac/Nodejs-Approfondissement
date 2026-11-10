@@ -17,7 +17,7 @@ describe("tester API articles", () => {
         _id: USER_ID,
         name: "Testy",
         email: "testy@test.fr",
-        password: "azertyuiop",
+        password: "passtest",
         role: "admin",
     };
     // Article fictif renvoyé à la place de la base de données
